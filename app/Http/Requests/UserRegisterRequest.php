@@ -17,7 +17,8 @@ class UserRegisterRequest extends FormRequest
           'email' => 'email|required|unique:users,email',
           'first_name' => 'required',
           'last_name' => 'required',
-          'password' => 'required|min:6'
+          'password' => 'required|min:6',
+          'role' => 'required',
         ];
     }
 }

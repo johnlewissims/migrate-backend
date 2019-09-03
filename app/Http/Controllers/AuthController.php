@@ -14,6 +14,8 @@ class AuthController extends Controller
         'email' => $request->email,
         'first_name' => $request->first_name,
         'last_name' => $request->last_name,
+        'role' => $request->role[0],
+        'company' => $request->company,
         'password' => bcrypt($request->password),
       ]);
 
@@ -50,5 +52,5 @@ class AuthController extends Controller
 
     public function logout(Request $request){
       auth()->logout();
-    }    
+    }
 }
