@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Storage;
 use App\Http\Resources\User as UserResource;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserLoginRequest;
@@ -22,6 +23,9 @@ class AuthController extends Controller
       if(!$token = auth()->attempt($request->only(['email', 'password']))) {
         return abort(401);
       };
+
+      $path = $request->user()->id;
+      Storage::makeDirectory($path);
 
       return (new UserResource($request->user()))->additional([
         'meta' => [
