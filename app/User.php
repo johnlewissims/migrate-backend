@@ -32,4 +32,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function video()
+    {
+        return $this->belongsToMany(Video::class);
+    }
 }

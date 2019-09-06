@@ -8,4 +8,5 @@ Route::post('/logout', 'AuthController@logout');
 
 Route::group(['prefix' => 'videos'], function(){
   Route::post('/', 'VideoController@store')->middleware('auth:api');
+  Route::get('/', 'VideoController@index')->middleware('auth:api');
 });

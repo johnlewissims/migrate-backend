@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Pbmedia\LaravelFFMpeg\FFMpegServiceProvider::class,
+        App\Providers\VideoModelServiceProvider::class,
 
         /*
          * Package Service Providers...
