@@ -5,14 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Orderable;
 
-class Video extends Model
+class Watermark extends Model
 {
   use Orderable;
   protected $fillable = [
-      'name', 'title', 'description',  'type', 'size', 'owner_id', 'status'
+    'user_id', 'name'
   ];
   public function user()
   {
-      return $this->belongsToMany(User::class);
+      return $this->belongsTo(User::class);
   }
 }

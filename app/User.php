@@ -37,4 +37,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Video::class);
     }
+    public function watermark()
+    {
+        return $this->hasMany(Watermark::class);
+    }
 }

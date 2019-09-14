@@ -15,6 +15,7 @@ class VideoStoreRequest extends FormRequest
   {
       return [
         'title' => 'required',
+        'owner_id' => 'owner_id',
         'description' => 'required',
       ];
   }
