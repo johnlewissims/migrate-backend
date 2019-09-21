@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Pbmedia\LaravelFFMpeg\FFMpegServiceProvider::class,
         App\Providers\VideoModelServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -227,8 +228,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'FFMpeg' => Pbmedia\LaravelFFMpeg\FFMpegFacade::class
-
+        'FFMpeg' => Pbmedia\LaravelFFMpeg\FFMpegFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

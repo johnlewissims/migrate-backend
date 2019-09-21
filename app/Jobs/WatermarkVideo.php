@@ -8,6 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Video;
+use App\Watermark;
 use FFMpeg;
 
 class WatermarkVideo implements ShouldQueue
@@ -32,8 +33,13 @@ class WatermarkVideo implements ShouldQueue
      */
     public function handle()
     {
-      FFMpeg::fromDisk('local')->open('private/videos/'. $this->video->id . '/' .$this->video->name)->addFilter(function ($filters) {
-      $filters->watermark(storage_path('app/public/watermarks/nike-logo.png'), [
+
+      $watermark = Watermark::where('id', $this->video->watermark_id)->get('name');
+      $watermarkName = $watermark[0]['name'];
+      $watermarkPath = 'app/public/watermarks/'.$this->video->watermark_id.'/'.$watermarkName;
+
+      FFMpeg::fromDisk('local')->open('private/videos/'. $this->video->id . '/' .$this->video->name)->addFilter(function ($filters) use($watermarkPath){
+      $filters->watermark(storage_path($watermarkPath), [
               'position' => 'relative',
               'bottom' => 50,
               'left' => 50,
@@ -42,5 +48,17 @@ class WatermarkVideo implements ShouldQueue
 
       FFMpeg::fromDisk('local')->open('private/videos/'. $this->video->id . '/watermark.mov')->getFrameFromSeconds(1)->export()->toDisk('public')->save('/videos/ZWSWB6MFGRtybP4p/'. $this->video->id .'/screenshot.png');
       Video::where('id', $this->video->id)->update(['status'=>'Uploaded']);
+
+      // $watermarkPath = 'app/public/watermarks/'. $this->video->watermark_id . '/'. $watermarkName;
+      // FFMpeg::fromDisk('local')->open('private/videos/'. $this->video->id . '/' .$this->video->name)->addFilter(function ($filters) use($watermarkPath){
+      // $filters->watermark(storage_path($watermarkPath), [
+      //         'position' => 'relative',
+      //         'bottom' => 50,
+      //         'left' => 50,
+      //     ]);
+      // })->export()->toDisk('local')->inFormat(new \FFMpeg\Format\Video\X264('libmp3lame', 'libx264'))->save('private/videos/'. $this->video->id . '/watermark.mov');
+      //
+      // FFMpeg::fromDisk('local')->open('private/videos/'. $this->video->id . '/watermark.mov')->getFrameFromSeconds(1)->export()->toDisk('public')->save('/videos/ZWSWB6MFGRtybP4p/'. $this->video->id .'/screenshot.png');
+      // Video::where('id', $this->video->id)->update(['status'=>'Uploaded']);
     }
 }

@@ -16,7 +16,8 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('owner_id')->nullable();
-            $table->string('name');
+            $table->bigInteger('watermark_id')->nullable();
+            $table->string('name')->nullable();
             $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->string('type')->nullable();
