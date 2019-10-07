@@ -71,9 +71,7 @@ class VideoController extends Controller
 
         //Dispatch Watermarking
         $this->dispatch(new WatermarkVideo($video));
-        
-
-      return new VideoResource($video);
+        return new VideoResource($video);
 
       } else {
         return response()->json(['response' => 'Please upload or record a video.'], 404);
@@ -126,7 +124,7 @@ class VideoController extends Controller
     public function deleteVideo(Video $video) {
 	  $file = new Filesystem;
 	  $privatePath = 'app/private/videos/'. $video->id. '/';
-	  $file->cleanDirectory(storage_path($privatePath));      
+	  $file->cleanDirectory(storage_path($privatePath));
       $video->delete();
       return response()->json(['response' => 'The video has been deleted.'], 200);
     }
