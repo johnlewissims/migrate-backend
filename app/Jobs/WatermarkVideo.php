@@ -49,7 +49,7 @@ class WatermarkVideo implements ShouldQueue
 
 
 	    //File::makeDirectory(public_path($this->video->id));
-      FFMpeg::fromDisk('local')->open('private/videos/'. $this->video->id . '/watermark.mov')->getFrameFromSeconds(0)->export()->toDisk('public')->save('videos/ZWSWB6MFGRtybP4p/'. $this->video->id . '/screenshot.png');
+      FFMpeg::fromDisk('local')->open('private/videos/'. $this->video->id . '/watermark.mov')->getFrameFromSeconds(0)->export()->toDisk('local')->save('private/videos/'. $this->video->id . '/screenshot.png');
       Video::where('id', $this->video->id)->update(['status'=>'Uploaded']);
 
       // $watermarkPath = 'app/public/watermarks/'. $this->video->watermark_id . '/'. $watermarkName;
