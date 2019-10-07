@@ -11,6 +11,7 @@ use App\Http\Resources\Video as VideoResource;
 use Illuminate\Http\Request;
 use App\Http\Requests\VideoStoreRequest;
 use App\Http\Requests\UpdateVideoRequest;
+use Illuminate\Filesystem\Filesystem;
 use FFMpeg;
 use Response;
 use File;
@@ -62,7 +63,7 @@ class VideoController extends Controller
         //Make video folders
         $privatePath = 'app/private/videos/'. $video->id. '/';
         $privatePathTwo = 'private/videos/'. $video->id. '/';
-        Storage::makeDirectory($privatePathTwo, 0775, true);
+        $publicPathTwo = 'public/videos/ZWSWB6MFGRtybP4p/'. $video->id;
 
         //Move video file to new folder
         $fileName = $request->filename;
@@ -70,8 +71,9 @@ class VideoController extends Controller
 
         //Dispatch Watermarking
         $this->dispatch(new WatermarkVideo($video));
+        
 
-        return new VideoResource($video);
+      return new VideoResource($video);
 
       } else {
         return response()->json(['response' => 'Please upload or record a video.'], 404);
@@ -122,8 +124,9 @@ class VideoController extends Controller
     }
 
     public function deleteVideo(Video $video) {
-      $openPath = public_path('videos/ZWSWB6MFGRtybP4p/'. $video->id);
-      Storage::deleteDirectory($openPath);
+	  $file = new Filesystem;
+	  $privatePath = 'app/private/videos/'. $video->id. '/';
+	  $file->cleanDirectory(storage_path($privatePath));      
       $video->delete();
       return response()->json(['response' => 'The video has been deleted.'], 200);
     }
@@ -147,7 +150,7 @@ class VideoController extends Controller
 
     //List users
     public function users() {
-      $users = User::all()->where('role', 'Sponsor');
+      $users = User::where('role', 'S')->orWhere('role', 'A')->get()->all();
       return $users;
     }
 

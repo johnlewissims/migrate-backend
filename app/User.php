@@ -45,4 +45,11 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Comment::class);
     }
+	public function influencer() {
+	    return $this->belongsToMany('App\User', 'influencer_sponsor', 'sponsor_id', 'influencer_id');
+	}
+	
+	public function sponsor() {
+	    return $this->belongsToMany('App\User', 'influencer_sponsor', 'influencer_id', 'sponsor_id');
+	} 
 }

@@ -8,7 +8,7 @@ Route::post('/logout', 'AuthController@logout');
 
 //Videos
 Route::group(['prefix' => 'videos'], function(){
-  Route::post('/', 'VideoController@store')->middleware('auth:api');
+  Route::post('/', 'VideoController@store');
   Route::get('/', 'VideoController@index')->middleware('auth:api');
   Route::get('/{video}', 'VideoController@show')->middleware('auth:api');
   //Update Video
@@ -43,9 +43,13 @@ Route::group(['prefix' => 'watermark'], function(){
 
 //Listing Users
 Route::group(['prefix' => 'users'], function(){
-  Route::get('/', 'VideoController@users')->middleware('auth:api');
+  Route::get('/', 'VideoController@users');
   Route::get('/{user}', 'VideoController@user')->middleware('auth:api');
 });
+
+//Associate Users
+Route::post('/associate/{user}', 'AssociateUsers@associate');
+Route::get('/sponsors/{user}', 'AssociateUsers@sponsors');
 
 
 
